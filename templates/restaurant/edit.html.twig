@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RestaurantController!{% endblock %}
+
+{% block body %}
+<div class="form-group">
+    {{ form(restaurantForm) }}
+</div>
+<div>
+    {% if restaurant and restaurant.photo %}
+        <img src="{{ vich_uploader_asset(restaurant, 'uploadedPhoto') }}" alt="{{ restaurant.title }}" />
+    {% endif %}
+</div>
+{% endblock %}
