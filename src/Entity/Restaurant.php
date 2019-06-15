@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -43,6 +45,17 @@ class Restaurant
      * @var File
      */
     private $uploadedPhoto;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Table", mappedBy="restaurant", orphanRemoval=true)
+     * @var Collection|Table[]
+     */
+    private $tables;
+
+    public function __construct()
+    {
+        $this->tables = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -124,6 +137,45 @@ class Restaurant
     public function setUploadedPhoto(?File $uploadedPhoto): self
     {
         $this->uploadedPhoto = $uploadedPhoto;
+        return $this;
+    }
+
+    /**
+     * @return Collection|Table[]
+     */
+    public function getTables(): Collection
+    {
+        return $this->tables;
+    }
+
+    /**
+     * @param Table $table
+     * @return Restaurant
+     */
+    public function addTable(Table $table): self
+    {
+        if (!$this->tables->contains($table)) {
+            $this->tables[] = $table;
+            $table->setRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Table $table
+     * @return Restaurant
+     */
+    public function removeTable(Table $table): self
+    {
+        if ($this->tables->contains($table)) {
+            $this->tables->removeElement($table);
+            // set the owning side to null (unless already changed)
+            if ($table->getRestaurant() === $this) {
+                $table->setRestaurant(null);
+            }
+        }
+
         return $this;
     }
 }
