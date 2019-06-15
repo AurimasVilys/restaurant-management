@@ -132,7 +132,7 @@ class Restaurant
 
     /**
      * @param File $uploadedPhoto
-     * @return Restaurant|null
+     * @return Restaurant
      */
     public function setUploadedPhoto(?File $uploadedPhoto): self
     {
