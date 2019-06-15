@@ -26,4 +26,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # DataTransferObjects transformers from entity or vice versa.
     App\DataTransferObjectTransformer\TransformerInterface $restaurantTransformer: '@App\DataTransferObjectTransformer\RestaurantTransformer'
+    App\DataTransferObjectTransformer\TransformerInterface $tableTransformer: '@App\DataTransferObjectTransformer\TableTransformer'
+
+    # Handlers to create, update or delete entities.
+    App\Handler\CreationHandlerInterface $tableCreationHandler: '@App\Handler\TableCreationHandler'
+    App\Handler\UpdateHandlerInterface $tableUpdateHandler: '@App\Handler\TableUpdateHandler'
