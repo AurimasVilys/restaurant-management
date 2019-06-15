@@ -10,14 +10,14 @@ class TableDTO
     /**
      * @var int
      * @Assert\NotNull()
-     * @Assert\Positive(message="Capacity must be a positive number")
+     * @Assert\Range(min="1", minMessage="Capacity must be a positive number")
      */
     private $capacity;
 
     /**
      * @var int
      * @Assert\NotNull()
-     * @Assert\Positive(message="Table must have a positive number")
+     * @Assert\Range(min="1", minMessage="Table must have a positive number")
      */
     private $number;
 
