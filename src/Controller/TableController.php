@@ -8,9 +8,11 @@ use App\Entity\Restaurant;
 use App\Entity\Table;
 use App\Form\TableFormType;
 use App\Handler\CreationHandlerInterface;
+use App\Handler\RemovalHandlerInterface;
 use App\Handler\UpdateHandlerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,10 +49,11 @@ class TableController extends AbstractController
 
     /**
      * @Route("/restaurant/{rest_id}/table/edit/{id}", name="table_edit", requirements={"id"="\d+", "rest_id"="\d+"})
-     * @ParamConverter("$table", class="App:Table")
+     * @ParamConverter("table", class="App:Table")
      * @param Table $table
      * @param Request $request
      * @param TransformerInterface $tableTransformer
+     * @param UpdateHandlerInterface $tableUpdateHandler
      * @return Response
      */
     public function edit(
@@ -73,5 +76,24 @@ class TableController extends AbstractController
         return $this->render('table/index.html.twig', [
             'tableForm' => $tableForm->createView()
         ]);
+    }
+
+    /**
+     * @Route(
+     *     "/restaurant/{rest_id}/table/delete/{id}",
+     *     name="table_delete",
+     *     requirements={"id"="\d+", "rest_id"="\d+"}
+     * )
+     * @ParamConverter("table", class="App:Table")
+     * @param Table $table
+     * @param RemovalHandlerInterface $tableRemovalHandler
+     * @return RedirectResponse
+     */
+    public function remove(
+        Table $table,
+        RemovalHandlerInterface $tableRemovalHandler
+    ) {
+        $tableRemovalHandler->remove($table);
+        return $this->redirectToRoute('restaurant');
     }
 }

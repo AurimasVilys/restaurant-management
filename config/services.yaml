@@ -33,4 +33,4 @@ services:
 
     # Handlers to create, update or delete entities.
     App\Handler\CreationHandlerInterface $tableCreationHandler: '@App\Handler\TableCreationHandler'
-    App\Handler\UpdateHandlerInterface $tableUpdateHandler: '@App\Handler\TableUpdateHandler'
+    App\Handler\UpdateHandlerInterface $tableUpdateHandler: '@App\Handler\TableUpdateHandler'    App\Handler\RemovalHandlerInterface $tableRemovalHandler: '@App\Handler\TableRemovalHandler'
