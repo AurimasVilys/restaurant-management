@@ -3,18 +3,39 @@
 {% block title %}Hello RestaurantController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/code/src/Controller/RestaurantController.php'|file_link(0) }}">src/Controller/RestaurantController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/code/templates/restaurant/index.html.twig'|file_link(0) }}">templates/restaurant/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <table class="table">
+        <tbody>
+        <tr>
+            <th scope="row">ID</th>
+            <th scope="row">Title</th>
+            <th scope="row">Photo</th>
+            <th scope="row">Active</th>
+            <th scope="row">Active tables</th>
+            <th scope="row">Edit</th>
+            <th scope="row">Delete</th>
+        </tr>
+        {% for restaurant in restaurants  %}
+            <tr>
+                <td>{{ restaurant.0.id }}</td>
+                <td>{{ restaurant.0.title }}</td>
+                <td>
+                {% if restaurant.0.photo %}
+                    <img src="{{ vich_uploader_asset(restaurant.0, 'uploadedPhoto') }}" alt="{{ restaurant.0.title }}" />
+                {% endif %}
+                </td>
+                <td>{{ restaurant.0.active == 1 ? 'Yes' : 'No' }}</td>
+                <td>{{ restaurant.Count }}</td>
+                <td>
+                    <a href="{{ path('restaurant_edit', {'id': restaurant.0.id}) }}"><span class="badge badge-info">EDIT</span></a>
+                </td>
+                <td>
+                    <a href="{{ path('restaurant_delete', {'id': restaurant.0.id}) }}"><span class="badge badge-danger">DELETE</span></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div>
+        <a href="{{ path('restaurant_create') }}"><span class="badge badge-primary">NEW RESTAURANT</span></a>
+    </div>
 {% endblock %}

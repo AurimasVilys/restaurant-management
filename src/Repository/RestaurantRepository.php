@@ -18,4 +18,24 @@ class RestaurantRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Restaurant::class);
     }
+
+
+    /**
+     * @param string|null $title
+     * @return mixed
+     */
+    public function findActiveRestaurants(?string $title)
+    {
+        $query = $this->createQueryBuilder('restaurant');
+        $query->addSelect('COUNT(tables.id) AS Count')
+            ->leftJoin('restaurant.tables', 'tables')
+            ->where('restaurant.active = 1')
+            ->andWhere('tables.active = 1')
+            ->groupBy('restaurant');
+        if ($title) {
+            $query->andWhere($query->expr()->like('restaurant.title', ':title'))
+                ->setParameter('title', $title);
+        }
+        return $query->getQuery()->getResult();
+    }
 }
