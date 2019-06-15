@@ -26,6 +26,7 @@ class RestaurantUpdateHandler implements UpdateHandlerInterface
     /**
      * @param Restaurant $object
      * @param RestaurantDTO $state
+     * @return void
      */
     public function update($object, $state)
     {

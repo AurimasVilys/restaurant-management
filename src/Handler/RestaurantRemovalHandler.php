@@ -24,6 +24,7 @@ class RestaurantRemovalHandler implements RemovalHandlerInterface
 
     /**
      * @param Restaurant $object
+     * @return void
      */
     public function remove($object)
     {

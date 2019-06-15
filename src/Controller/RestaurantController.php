@@ -6,9 +6,9 @@ use App\DataTransferObject\RestaurantDTO;
 use App\DataTransferObjectTransformer\TransformerInterface;
 use App\Entity\Restaurant;
 use App\Form\RestaurantFormType;
-use App\Handler\RestaurantCreationHandler;
-use App\Handler\RestaurantRemovalHandler;
-use App\Handler\RestaurantUpdateHandler;
+use App\Handler\CreationHandlerInterface;
+use App\Handler\RemovalHandlerInterface;
+use App\Handler\UpdateHandlerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -31,10 +31,10 @@ class RestaurantController extends AbstractController
     /**
      * @Route("/restaurant/create", name="restaurant_create")
      * @param Request $request
-     * @param RestaurantCreationHandler $restaurantCreationHandler
+     * @param CreationHandlerInterface $restaurantCreationHandler
      * @return Response|RedirectResponse
      */
-    public function create(Request $request, RestaurantCreationHandler $restaurantCreationHandler)
+    public function create(Request $request, CreationHandlerInterface $restaurantCreationHandler)
     {
         $form = $this->createForm(RestaurantFormType::class);
 
@@ -59,14 +59,14 @@ class RestaurantController extends AbstractController
      * @param Request $request
      * @param Restaurant $restaurant
      * @param TransformerInterface $restaurantTransformer
-     * @param RestaurantUpdateHandler $restaurantUpdateHandler
+     * @param UpdateHandlerInterface $restaurantUpdateHandler
      * @return Response|RedirectResponse
      */
     public function edit(
         Request $request,
         Restaurant $restaurant,
         TransformerInterface $restaurantTransformer,
-        RestaurantUpdateHandler $restaurantUpdateHandler
+        UpdateHandlerInterface $restaurantUpdateHandler
     ) {
         /** @var RestaurantDTO $restaurantDTO */
         $restaurantDTO = $restaurantTransformer->transform($restaurant);
@@ -91,12 +91,12 @@ class RestaurantController extends AbstractController
      * @Route("/restaurant/delete/{id}", name="restaurant_delete", requirements={"id"="\d+"})
      * @ParamConverter("restaurant", class="App:Restaurant")
      * @param Restaurant $restaurant
-     * @param RestaurantRemovalHandler $restaurantRemovalHandler
+     * @param RemovalHandlerInterface $restaurantRemovalHandler
      * @return RedirectResponse
      */
     public function remove(
         Restaurant $restaurant,
-        RestaurantRemovalHandler $restaurantRemovalHandler
+        RemovalHandlerInterface $restaurantRemovalHandler
     ) {
         $restaurantRemovalHandler->remove($restaurant);
         return $this->redirectToRoute('restaurant');

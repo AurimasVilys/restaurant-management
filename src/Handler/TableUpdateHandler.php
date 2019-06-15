@@ -26,6 +26,7 @@ class TableUpdateHandler implements UpdateHandlerInterface
     /**
      * @param Table $object
      * @param TableDTO $state
+     * @return void
      */
     public function update($object, $state)
     {

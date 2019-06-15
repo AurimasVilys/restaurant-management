@@ -6,7 +6,7 @@ interface RemovalHandlerInterface
 {
     /**
      * @param mixed $object
-     * @return mixed
+     * @return void
      */
     public function remove($object);
 }
