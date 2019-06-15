@@ -10,6 +10,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RestaurantRepository")
+ * @ORM\Table(name="restaurants")
  * @Vich\Uploadable
  */
 class Restaurant
