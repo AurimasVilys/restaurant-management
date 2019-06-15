@@ -8,7 +8,7 @@ use App\Entity\Restaurant;
 class RestaurantTransformer implements TransformerInterface
 {
     /**
-     * @param $object Restaurant
+     * @param Restaurant $object
      * @return RestaurantDTO
      */
     public function transform($object)
@@ -22,7 +22,7 @@ class RestaurantTransformer implements TransformerInterface
     }
 
     /**
-     * @param $object RestaurantDTO
+     * @param RestaurantDTO $object
      * @return Restaurant
      */
     public function reverseTransform($object)

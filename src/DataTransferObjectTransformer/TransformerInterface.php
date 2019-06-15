@@ -5,13 +5,13 @@ namespace App\DataTransferObjectTransformer;
 interface TransformerInterface
 {
     /**
-     * @param $object mixed
+     * @param mixed $object
      * @return mixed
      */
     public function transform($object);
 
     /**
-     * @param $object mixed
+     * @param mixed $object
      * @return mixed
      */
     public function reverseTransform($object);
