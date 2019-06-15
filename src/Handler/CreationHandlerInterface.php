@@ -5,7 +5,7 @@ namespace App\Handler;
 interface CreationHandlerInterface
 {
     /**
-     * @param $object
+     * @param mixed $object
      * @return mixed
      */
     public function create($object);

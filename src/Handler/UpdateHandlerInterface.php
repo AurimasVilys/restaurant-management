@@ -5,8 +5,8 @@ namespace App\Handler;
 interface UpdateHandlerInterface
 {
     /**
-     * @param $object mixed
-     * @param $state
+     * @param mixed $object
+     * @param mixed $state
      */
     public function update($object, $state);
 }

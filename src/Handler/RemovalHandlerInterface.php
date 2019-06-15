@@ -5,7 +5,7 @@ namespace App\Handler;
 interface RemovalHandlerInterface
 {
     /**
-     * @param $object mixed
+     * @param mixed $object
      * @return mixed
      */
     public function remove($object);
