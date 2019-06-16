@@ -27,13 +27,15 @@ class RestaurantUpdateHandler implements UpdateHandlerInterface
      * @param Restaurant $object
      * @param RestaurantDTO $state
      * @return void
+     * @throws \Exception
      */
     public function update($object, $state)
     {
         $object
             ->setTitle($state->getTitle())
             ->setUploadedPhoto($state->getUploadedPhoto())
-            ->setActive($state->isActive());
+            ->setActive($state->isActive())
+            ->setUpdatedAt(new \DateTime('now'));
         $this->entityManager->flush();
     }
 }
