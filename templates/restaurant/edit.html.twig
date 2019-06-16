@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Restaurant create/edit{% endblock %}
+
+{% block body %}
+    <div class="m-4 col-lg-4">
+        {{ form_start(restaurantForm) }}
+        <div class="form-group">
+            {{ form_label(restaurantForm.title) }}
+            {{ form_widget(restaurantForm.title, {'attr' : {'class' : 'form-control'}} ) }}
+            <div class="alert-danger">
+                {{ form_errors(restaurantForm.title) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(restaurantForm.uploadedPhoto) }}
+            {{ form_widget(restaurantForm.uploadedPhoto, {'attr' : {'class' : 'form-control-file'}} ) }}
+            <div class="alert-danger">
+                {{ form_errors(restaurantForm.uploadedPhoto) }}
+            </div>
+        </div>
+        {% if restaurant and restaurant.photo %}
+            <div class="form-group">
+                <span class="form-text">Currently uploaded photo</span>
+                <img class="figure-img" src="{{ vich_uploader_asset(restaurant, 'uploadedPhoto') | imagine_filter('resize_table') }}" alt="{{ restaurant.title }}" />
+            </div>
+        {% endif %}
+        <div class="form-group">
+            {{ form_label(restaurantForm.active) }}
+            {{ form_widget(restaurantForm.active, {'attr' : {'class' : 'form-control'}} ) }}
+            <div class="alert-danger">
+                {{ form_errors(restaurantForm.active) }}
+            </div>
+        </div>
+        {{ form_row(restaurantForm.save, {'attr' : {'class' : 'btn btn-primary'}}) }}
+        {{ form_end(restaurantForm) }}
+    </div>
+{% endblock %}

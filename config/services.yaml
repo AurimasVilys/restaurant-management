@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    locale: 'en'
 
 services:
     # default configuration for services in *this* file
@@ -25,3 +26,18 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # DataTransferObjects transformers from entity or vice versa.
+    App\DataTransferObjectTransformer\TransformerInterface $restaurantTransformer: '@App\DataTransferObjectTransformer\RestaurantTransformer'
+    App\DataTransferObjectTransformer\TransformerInterface $tableTransformer: '@App\DataTransferObjectTransformer\TableTransformer'
+
+    # Handlers to create, update or delete entities.
+    # Creation Handlers
+    App\Handler\CreationHandlerInterface $tableCreationHandler: '@App\Handler\TableCreationHandler'
+    App\Handler\CreationHandlerInterface $restaurantCreationHandler: '@App\Handler\RestaurantCreationHandler'
+    # Update Handlers
+    App\Handler\UpdateHandlerInterface $tableUpdateHandler: '@App\Handler\TableUpdateHandler'
+    App\Handler\UpdateHandlerInterface $restaurantUpdateHandler: '@App\Handler\RestaurantUpdateHandler'
+    # Removal Handlers
+    App\Handler\RemovalHandlerInterface $tableRemovalHandler: '@App\Handler\TableRemovalHandler'
+    App\Handler\RemovalHandlerInterface $restaurantRemovalHandler: '@App\Handler\RestaurantRemovalHandler'
