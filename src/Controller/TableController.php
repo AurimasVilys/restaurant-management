@@ -11,6 +11,7 @@ use App\Handler\CreationHandlerInterface;
 use App\Handler\RemovalHandlerInterface;
 use App\Handler\UpdateHandlerInterface;
 use App\Repository\TableRepository;
+use App\Utils\PaginationUtilsInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -25,18 +26,29 @@ class TableController extends AbstractController
      * @Route("/restaurant/{id}/table", name="table", requirements={"id"="\d+"})
      * @ParamConverter("restaurant", class="App:Restaurant")
      * @param Restaurant $restaurant
-     * @param Request $request
+     * @param PaginationUtilsInterface $paginationUtils
      * @return Response
      */
-    public function index(Restaurant $restaurant, Request $request)
-    {
+    public function index(
+        Restaurant $restaurant,
+        PaginationUtilsInterface $paginationUtils,
+        Request $request
+    ) {
         /** @var TableRepository $tableRepository */
         $tableRepository = $this->getDoctrine()->getRepository(Table::class);
-        $tables = $tableRepository->findByRestaurant($restaurant);
+
+        $page = $paginationUtils->getPageInput($request->query->get('page'));
+        $paginator = $tableRepository->findByRestaurant($restaurant, $page, PaginationUtilsInterface::PAGE_SIZE);
+        $pageCount = ceil($paginator->count() / PaginationUtilsInterface::PAGE_SIZE);
+
+        /** @var Table[] $tables */
+        $tables = $paginator->getIterator();
 
         return $this->render('/table/index.html.twig', [
             'tables' => $tables,
-            'restaurant' => $restaurant
+            'restaurant' => $restaurant,
+            'page' => $page,
+            'pageCount' => $pageCount,
         ]);
     }
 
