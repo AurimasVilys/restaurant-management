@@ -19,6 +19,12 @@
                 {{ form_errors(restaurantForm.uploadedPhoto) }}
             </div>
         </div>
+        {% if restaurant and restaurant.photo %}
+            <div class="form-group">
+                <span class="form-text">Currently uploaded photo</span>
+                <img class="figure-img" src="{{ vich_uploader_asset(restaurant, 'uploadedPhoto') | imagine_filter('resize_table') }}" alt="{{ restaurant.title }}" />
+            </div>
+        {% endif %}
         <div class="form-group">
             {{ form_label(restaurantForm.active) }}
             {{ form_widget(restaurantForm.active, {'attr' : {'class' : 'form-control'}} ) }}
@@ -29,10 +35,4 @@
         {{ form_row(restaurantForm.save, {'attr' : {'class' : 'btn btn-primary'}}) }}
         {{ form_end(restaurantForm) }}
     </div>
-    {% if restaurant and restaurant.photo %}
-    <div class="m-4 col-lg-6">
-        <span class="form-text text-center">Currently uploaded photo</span>
-        <img  class="figure-img" src="{{ vich_uploader_asset(restaurant, 'uploadedPhoto') | imagine_filter('resize_edit') }}" alt="{{ restaurant.title }}" />
-    </div>
-    {% endif %}
 {% endblock %}
