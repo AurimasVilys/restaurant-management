@@ -3,7 +3,7 @@
 {% block title %}Restaurant {{ restaurant.title }} tables{% endblock %}
 
 {% block body %}
-    <table class="table table-responsive m-4">
+    <table class="table">
         <tbody>
         <tr>
             <th scope="row">Number</th>
@@ -16,13 +16,32 @@
             <tr>
                 <td>{{ table.number }}</td>
                 <td>{{ table.capacity }}</td>
-                <td>{{ table.active == 1 ? 'Yes' : 'No' }}</td>
+                <td>
+                    {% if table.active == true %}
+                        <span class="badge badge-success">YES</span>
+                    {% else %}
+                        <span class="badge badge-danger">NO</span>
+                    {% endif %}
+                </td>
                 <td><a class="btn btn-info" href="{{ path('table_edit', {'id': table.id, 'rest_id': restaurant.id}) }}">EDIT</a></td>
                 <td><a class="btn btn-danger" href="{{ path('table_delete', {'id': table.id, 'rest_id': restaurant.id}) }}">DELETE</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    <div>
+        <div class="text-center">
+            {% if page > 1 %}
+                <a href="{{ path('table', { 'id': restaurant.id, 'page': page-1 }) }}" class="btn btn-dark">PREVIOUS</a>
+            {% endif %}
+            {% if page < pageCount %}
+                <a href="{{ path('table', { 'id': restaurant.id, 'page': page+1 }) }}" class="btn btn-dark">NEXT</a>
+            {% endif %}
+        </div>
+        <div class="small text-center">
+            Current page: {{ page }}. Total pages: {{ pageCount }}
+        </div>
+    </div>
     <div class="m-4">
         <a href="{{ path('table_create', {'id': restaurant.id}) }}" class="btn btn-primary">NEW TABLE</a>
         <a href="{{ path('restaurant') }}" class="btn btn-secondary">RESTAURANTS</a>

@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Restaurant;
 use App\Entity\Table;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -26,15 +27,19 @@ class TableRepository extends ServiceEntityRepository
 
     /**
      * @param Restaurant $restaurant
-     * @return Table[]
+     * @return Paginator
      */
-    public function findByRestaurant(Restaurant $restaurant)
+    public function findByRestaurant(Restaurant $restaurant, int $page = 1, int $limit = 5)
     {
         $query = $this->createQueryBuilder('table');
 
-        return $query->where('table.restaurant = :restaurant')
+         $query->where('table.restaurant = :restaurant')
             ->setParameter('restaurant', $restaurant)
-            ->getQuery()
-            ->getResult();
+            ->setFirstResult($limit * ($page - 1))
+            ->setMaxResults($limit);
+
+        $paginator = new Paginator($query->getQuery());
+
+        return $paginator;
     }
 }

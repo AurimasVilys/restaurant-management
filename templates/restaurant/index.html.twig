@@ -11,7 +11,7 @@
             </div>
         </form>
     </div>
-    <table class="table table-responsive m-4">
+    <table class="table">
         <tbody>
         <tr>
             <th scope="row">ID</th>
@@ -32,8 +32,14 @@
                     <img src="{{ vich_uploader_asset(restaurant.0, 'uploadedPhoto') | imagine_filter('resize_table') }}" alt="{{ restaurant.0.title }}" />
                 {% endif %}
                 </td>
-                <td>{{ restaurant.0.active == 1 ? 'Yes' : 'No' }}</td>
-                <td>{{ restaurant.Count }}</td>
+                <td>
+                    {% if restaurant.0.active == true %}
+                        <span class="badge badge-success">YES</span>
+                    {% else %}
+                        <span class="badge badge-danger">NO</span>
+                    {% endif %}
+                </td>
+                <td>{{ restaurant.TableCount }}</td>
                 <td>
                     <a href="{{ path('restaurant_edit', {'id': restaurant.0.id}) }}" class="btn btn-info">EDIT</a>
                 </td>
@@ -47,6 +53,19 @@
         {% endfor %}
         </tbody>
     </table>
+    <div>
+        <div class="text-center">
+            {% if page > 1 %}
+                <a href="{{ path('restaurant', { 'page': page-1 }) }}" class="btn btn-dark">PREVIOUS</a>
+            {% endif %}
+            {% if page < pageCount %}
+                <a href="{{ path('restaurant', { 'page': page+1 }) }}" class="btn btn-dark">NEXT</a>
+            {% endif %}
+        </div>
+        <div class="small text-center">
+            Current page: {{ page }}. Total pages: {{ pageCount }}
+        </div>
+    </div>
     <div class="m-4">
         <a href="{{ path('restaurant_create') }}" class="btn btn-primary">NEW RESTAURANT</a>
     </div>

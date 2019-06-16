@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Restaurant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -22,19 +23,26 @@ class RestaurantRepository extends ServiceEntityRepository
 
     /**
      * @param string|null $title
-     * @return mixed
+     * @param int $page
+     * @param int $limit
+     * @return Paginator
      */
-    public function findActiveRestaurants(?string $title)
+    public function findActiveRestaurants(?string $title, int $page = 1, int $limit = 5)
     {
         $query = $this->createQueryBuilder('restaurant');
-        $query->addSelect('COUNT(tables.id) AS Count')
+        $query->addSelect('COUNT(tables.id) AS TableCount')
             ->leftJoin('restaurant.tables', 'tables', 'WITH', 'tables.active = 1')
-            ->where('restaurant.active = 1')
             ->groupBy('restaurant');
         if ($title) {
             $query->andWhere($query->expr()->like('restaurant.title', ':title'))
                 ->setParameter('title', '%' . $title . '%');
         }
-        return $query->getQuery()->getResult();
+
+        $query->setFirstResult($limit * ($page - 1))
+            ->setMaxResults($limit);
+
+        $paginator = new Paginator($query->getQuery());
+
+        return $paginator;
     }
 }
