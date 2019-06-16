@@ -15,8 +15,8 @@ class TableFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('capacity', NumberType::class)
             ->add('number', NumberType::class)
+            ->add('capacity', NumberType::class)
             ->add('active', CheckboxType::class, ['label' => 'Table is active', 'required' => false])
             ->add('save', SubmitType::class, ['label' => 'Save'])
         ;

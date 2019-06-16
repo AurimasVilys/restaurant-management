@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Restaurant;
 use App\Entity\Table;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -14,8 +15,26 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class TableRepository extends ServiceEntityRepository
 {
+    /**
+     * TableRepository constructor.
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Table::class);
+    }
+
+    /**
+     * @param Restaurant $restaurant
+     * @return Table[]
+     */
+    public function findByRestaurant(Restaurant $restaurant)
+    {
+        $query = $this->createQueryBuilder('table');
+
+        return $query->where('table.restaurant = :restaurant')
+            ->setParameter('restaurant', $restaurant)
+            ->getQuery()
+            ->getResult();
     }
 }

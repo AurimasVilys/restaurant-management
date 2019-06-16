@@ -3,7 +3,28 @@
 {% block title %}Hello TableController!{% endblock %}
 
 {% block body %}
-    <div class="form-group">
-        {{ form(tableForm) }}
+    <table class="table table-responsive m-4">
+        <tbody>
+        <tr>
+            <th scope="row">Number</th>
+            <th scope="row">Capacity</th>
+            <th scope="row">Active</th>
+            <th scope="row">Edit</th>
+            <th scope="row">Delete</th>
+        </tr>
+        {% for table in tables  %}
+            <tr>
+                <td>{{ table.number }}</td>
+                <td>{{ table.capacity }}</td>
+                <td>{{ table.active == 1 ? 'Yes' : 'No' }}</td>
+                <td><a class="btn btn-info" href="{{ path('table_edit', {'id': table.id, 'rest_id': restaurant.id}) }}">EDIT</a></td>
+                <td><a class="btn btn-danger" href="{{ path('table_delete', {'id': table.id, 'rest_id': restaurant.id}) }}">DELETE</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="m-4">
+        <a href="{{ path('table_create', {'id': restaurant.id}) }}" class="btn btn-primary">NEW TABLE</a>
+        <a href="{{ path('restaurant') }}" class="btn btn-secondary">RESTAURANTS</a>
     </div>
 {% endblock %}
