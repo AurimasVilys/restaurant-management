@@ -17,3 +17,9 @@ liip_imagine:
                 relative_resize:
                     widen: 200
                     allow_upscale: true
+        resize_edit:
+            quality: 80
+            filters:
+                relative_resize:
+                    widen: 400
+                    allow_upscale: true
