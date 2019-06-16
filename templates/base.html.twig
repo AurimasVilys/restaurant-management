@@ -25,9 +25,13 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="{{ path('restaurant') }}">Restaurants</a>
                         </li>
-                        <li class="nav-item">
-                            {{ app.user.name }}
+                        <li class="nav-item nav-link">
+                            User name: {{ app.user.name }}
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+
                     {% else %}
 
                         <li class="nav-item">

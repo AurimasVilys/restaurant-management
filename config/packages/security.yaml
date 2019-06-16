@@ -19,5 +19,8 @@ security:
             guard:
                 authenticators:
                     - App\Security\LoginAuthenticator
+            logout:
+                path:   /logout
+                target: /
     access_control:
          - { path: ^/restaurant, roles: ROLE_USER }
