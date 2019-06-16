@@ -2,13 +2,13 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Restaurant;
 use App\Entity\User;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class AppFixtures extends Fixture
+class UserFixtures extends AbstractFixture implements ORMFixtureInterface
 {
     /**
      * @var UserPasswordEncoderInterface
@@ -25,12 +25,6 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $restaurant = new Restaurant();
-        $restaurant
-            ->setTitle('Užkandinė Avilys')
-            ->setActive(true);
-
-
         $user = new User();
         $user->setName('Aurimas Vilys')
             ->setEmail('aurimas@vilys.lt')
@@ -40,7 +34,6 @@ class AppFixtures extends Fixture
             );
 
         $manager->persist($user);
-        $manager->persist($restaurant);
         $manager->flush();
     }
 }

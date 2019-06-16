@@ -39,6 +39,15 @@ scripts/start.sh
 scripts/install-first.sh
 ```
 
+* When dependencies are installed load database with fixtures
+```bash
+scripts/backend.sh
+bin/console doctrine:migrations:migrate
+bin/console doctrine:fixtures:load -q
+```
+
+>Note after loading fixtures images will be deleted from folder `src/DataFixtures/Images`.
+
 * To stop containers:
 ```bash
 scripts/stop.sh
