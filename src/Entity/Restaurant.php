@@ -5,12 +5,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Index;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RestaurantRepository")
- * @ORM\Table(name="restaurants")
+ * @ORM\Table(name="restaurants", indexes={@Index(name="search_idx", columns={"title"})})
  * @Vich\Uploadable
  */
 class Restaurant
