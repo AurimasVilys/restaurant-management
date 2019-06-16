@@ -28,13 +28,12 @@ class RestaurantRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('restaurant');
         $query->addSelect('COUNT(tables.id) AS Count')
-            ->leftJoin('restaurant.tables', 'tables')
+            ->leftJoin('restaurant.tables', 'tables', 'WITH', 'tables.active = 1')
             ->where('restaurant.active = 1')
-            ->andWhere('tables.active = 1')
             ->groupBy('restaurant');
         if ($title) {
             $query->andWhere($query->expr()->like('restaurant.title', ':title'))
-                ->setParameter('title', $title);
+                ->setParameter('title', '%' . $title . '%');
         }
         return $query->getQuery()->getResult();
     }
