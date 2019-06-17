@@ -3,6 +3,10 @@
 {% block title %}Restaurant {{ restaurant.title }} tables{% endblock %}
 
 {% block body %}
+    <div class="m-4">
+        <a href="{{ path('table_create', {'id': restaurant.id}) }}" class="btn btn-primary">NEW TABLE</a>
+        <a href="{{ path('restaurant') }}" class="btn btn-secondary">RESTAURANTS</a>
+    </div>
     <table class="table">
         <tbody>
         <tr>
@@ -41,9 +45,5 @@
         <div class="small text-center">
             Current page: {{ page }}. Total pages: {{ pageCount }}
         </div>
-    </div>
-    <div class="m-4">
-        <a href="{{ path('table_create', {'id': restaurant.id}) }}" class="btn btn-primary">NEW TABLE</a>
-        <a href="{{ path('restaurant') }}" class="btn btn-secondary">RESTAURANTS</a>
     </div>
 {% endblock %}
